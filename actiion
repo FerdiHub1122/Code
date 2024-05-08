@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List</title>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>User type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        include('config.php');
+
+        class InsertData{
+            private $conn;
+
+            public function __construct($conn){
+                $this-> conn = $conn;
+            }
+        public function getData(){
+
+        $sql = "SELECT * FROM user";
+        $result = $this-> conn-> query($sql);
+        $x = 0;
+        while($row = $result->fetch_assoc()) {
+            $x++;
+        ?>
+            <tr>
+                <td><?php echo $x; ?></td>
+                <td><?php echo $row['username']; ?></td>
+                <td><?php echo $row['userpass']; ?></td>
+                <td><?php echo $row['usertype']; ?></td>
+                <td><a href="delete.php?id=<?php echo $row['userid']; ?>">Delete</a></td>
+            </tr>
+        <?php
+        }
+      }
+     }
+    $InsertData1 = new InsertData($conn);
+    $InsertData1->getData();   
+        ?>
+    </tbody>
+</table>
+</body>
+</html>
